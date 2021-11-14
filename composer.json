@@ -1,5 +1,5 @@
 {
-    "name": "vitaly/qrshow",
+    "name": "optinsoft/qrshow",
     "description": "show qr code",
     "license": "BSD",
     "autoload": {
@@ -9,7 +9,7 @@
     },
     "authors": [
         {
-            "name": "Vitaly",
+            "name": "Vitaly Yakovlev",
             "email": "vitaly@optinsoft.net"
         }
     ],

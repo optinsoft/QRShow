@@ -1,8 +1,27 @@
 <?php
-    use Predis\{Client};
+/*
+    Set QR data API
 
-	require_once '../vendor/autoload.php';
-	require_once '../src/config.php';
+    HTTP POST parameters:
+        id - qr code identifier, required
+        data - qr code data
+        ttl - qr code expire time in seconds
+        s - signature, required when QR_API_KEY is not empty 
+        t - token, required when QR_TOKEN is not empty
+
+    @created 13.11.2021
+    @package optinsoft\QRShow
+    @author Vitaly Yakovlev <vitaly@optinsoft.net>
+    @copyright 2021 Vitaly Yakovlev
+    @license BSD 2-Clause
+
+    require global definitions:
+        QR_API_KEY - from config
+        QR_TOKEN - from config
+        QR_REDIS_PREFIX - from config
+        QR_REDIS_PREFIX - from config
+*/
+    use Predis\{Client};
 
     header('Content-Type: application/json');
 
@@ -22,7 +41,7 @@
     $data = $_POST['data'];
     $ttl = (int)$_POST['ttl'];
     if (!empty(QR_API_KEY)) {
-        $hash = base64_encode(hash_hmac('sha512', $data . $ttl, QR_API_KEY, true));
+        $hash = base64_encode(hash_hmac('sha512', $id . $data . $ttl, QR_API_KEY, true));
         if (!isset($_POST['s']) || $hash !== $_POST['s']) {
             header("HTTP/1.1 400 wrong hash");
             die('{"status":4,"error":"wrong hash"}');
@@ -38,7 +57,7 @@
         $redis = new Client();
         $redis->set(QR_REDIS_PREFIX . $id, $data);
         $redis->expire(QR_REDIS_PREFIX . $id, $ttl);
-	} catch (Exception $e) {
+	} catch (\Exception $e) {
         header("HTTP/1.1 500 Fatal Error at #2");
 		die();
 	}
