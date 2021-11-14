@@ -20,7 +20,7 @@ PHP 7.2+ with `mbstring` extension.
 
 ### For [Apache](https://httpd.apache.org/)
 
-- Copy QRShow to your server, for example to /var/www/qrshow/
+- Copy QRShow to your web server root directory, for example to /var/www/qrshow/
 
 ```
 /var/www/qrshow/
@@ -61,7 +61,7 @@ setsebool -P httpd_can_network_connect on
 
 ### Configuring
 
-QRShow configuration file lcated at /conf/config.php
+QRShow configuration file located at /conf/config.php
 
 ####  `QRShow` constants
 name | description
