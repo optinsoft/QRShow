@@ -4,7 +4,7 @@
     "license": "BSD",
     "autoload": {
         "psr-4": {
-            "Vitaly\\Qrshow\\": "src/"
+            "optinsoft\\QRShow\\": ["src/", "src/components", "src/pages"]
         }
     },
     "authors": [

@@ -22,7 +22,8 @@
 
 		try {
 			$redis = new Client();
-			$data = $redis->get(QR_REDIS_PREFIX . $id);
+			$json = json_decode($redis->get(QR_REDIS_PREFIX . $id), true);
+			$data = $json['data'];
 		} catch (\Exception $e) {
 			header("HTTP/1.1 500 Fatal Error at #1");
 			die();

@@ -33,6 +33,10 @@
         header("HTTP/1.1 400 wrong data");
         die('{"status":2,"error":"wrong data"}');
     }
+    if (isset($_POST['title']) && !preg_match('/^[a-zA-Z0-9#$_.-]{1,128}$/', $_POST['title'])) {
+        header("HTTP/1.1 400 wrong title");
+        die('{"status":6,"error":"wrong title"}');
+    }
     if (!isset($_POST['ttl']) || !preg_match('/^[0-9]{1,10}$/', $_POST['ttl'])) {
         header("HTTP/1.1 400 wrong ttl");
         die('{"status":3,"error":"wrong ttl"}');
@@ -55,7 +59,13 @@
     }
     try {
         $redis = new Client();
-        $redis->set(QR_REDIS_PREFIX . $id, $data);
+        $info = [
+            'data' => $data
+        ];
+        if (isset($_POST['title'])) {
+            $info['title'] = $_POST['title'];
+        }
+        $redis->set(QR_REDIS_PREFIX . $id, json_encode($info));
         $redis->expire(QR_REDIS_PREFIX . $id, $ttl);
 	} catch (\Exception $e) {
         header("HTTP/1.1 500 Fatal Error at #2");
