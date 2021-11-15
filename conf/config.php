@@ -22,4 +22,6 @@
     if (!defined('QR_REDIS_HOST')) define('QR_REDIS_HOST', '127.0.0.1');
     if (!defined('QR_REDIS_PORT')) define('QR_REDIS_PORT', 6379);
     if (!defined('QR_REDIS_PREFIX')) define('QR_REDIS_PREFIX', 'qr.');
+    if (!defined('QR_MIN_TTL')) define('QR_MIN_TTL', 1);
+    if (!defined('QR_MAX_TTL')) define('QR_MAX_TTL', 60);
 ?>

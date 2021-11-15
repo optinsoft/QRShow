@@ -49,6 +49,10 @@
     $space = $_POST['space'];
     $data = $_POST['data'];
     $ttl = (int)$_POST['ttl'];
+    if ($ttl < QR_MIN_TTL || $ttl > QR_MAX_TTL) {
+        header("HTTP/1.1 400 wrong ttl");
+        die('{"status":3,"error":"wrong ttl"}');
+    }
     if (!empty(QR_API_KEY)) {
         $hash = base64_encode(hash_hmac('sha512', $id . $space . $data . $ttl, QR_API_KEY, true));
         if (!isset($_POST['s']) || $hash !== $_POST['s']) {

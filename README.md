@@ -88,6 +88,8 @@ name | description
 `QR_REDIS_HOST` | Redis host.
 `QR_REDIS_PORT` | Redis port.
 `QR_REDIS_PREFIX` | Keys in redis will be combination of the `QR_REDIS_PREFIX` and id, provided by user.
+`QR_MIN_TTL` | Min. `ttl` value. Seconds.
+`QR_MAX_TTL` | Max. `ttl` value. Seconds.
 
 ## Usage
 
@@ -122,6 +124,6 @@ name | description
 `space`|Space - redis keys prefix. 16-40 hex digits.
 `data`|Data content.
 `title`|Data title.
-`ttl`|Time-to-live, seconds.
+`ttl`|Time-to-live, seconds. Must be between `QR_MIN_TTL` and `QR_MAX_TTL`.
 `s`|Signature, base64-encoded HMAC SHA-512 hash of `id` + `space` + `data` + `ttl` + `QR_API_KEY`.
 `t`|Token.
