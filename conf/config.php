@@ -22,5 +22,4 @@
     if (!defined('QR_REDIS_HOST')) define('QR_REDIS_HOST', '127.0.0.1');
     if (!defined('QR_REDIS_PORT')) define('QR_REDIS_PORT', 6379);
     if (!defined('QR_REDIS_PREFIX')) define('QR_REDIS_PREFIX', 'qr.');
-    if (!defined('QR_SERVER_PORT')) define('QR_SERVER_PORT', 8080);
 ?>

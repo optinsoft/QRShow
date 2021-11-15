@@ -20,21 +20,36 @@ PHP 7.2+ with `mbstring` extension.
 
 ### For [Apache](https://httpd.apache.org/)
 
-- Copy QRShow to your web server root directory, for example to /var/www/qrshow/
+- Copy QRShow to your web server root directory, for example to /var/www/qrshow/. You can use git:
+
+```bash
+git clone https://github.com/optinsoft/QRShow.git
+```
+
+#### QRShow directory structure
 
 ```
 /var/www/qrshow/
 ├── conf/
-│   └── config.php
+|   ├── config.php
+│   └── ...
 ├── pub/
+│   ├── css/
+│   │   └── ...
+│   ├── img/
+│   │   └── ...
+│   ├── js/
+│   │   └── ...
+│   ├── list/
+│   │   └── index.php
 │   └── index.php
 ├── src/
 │   ├── components/
-│   │   └── qrview.php
+│   │   └── ...
 │   └── pages/
-│       ├── qrdata.php
-│       └── qrimage.php
+│       └── ...
 ├── composer.json
+├── LICENSE
 └── README.md
 ```
 
@@ -61,7 +76,9 @@ setsebool -P httpd_can_network_connect on
 
 ### Configuring
 
-QRShow configuration file located at /conf/config.php
+QRShow configuration file located at `/conf/config.php`
+
+Please, don't edit this file directly. Instead put your configuration settings to `/conf/user_config.php`. You can create `/conf/user_config.php` by copying it from `/conf/_user_config.php`.
 
 ####  `QRShow` constants
 name | description

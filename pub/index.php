@@ -32,6 +32,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title><?= htmlspecialchars(QR_TITLE) ?></title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<style>
 		body{
 			margin: 5em;
@@ -40,11 +42,17 @@
 	</style>
 </head>
 <body>
-	<h1><?= htmlspecialchars(QR_TITLE) ?></h1>
+<?php
+	$popup = isset($_GET['popup']) && (bool)$_GET['popup'];
+	if (!$popup) {
+?>
+	<h1><?= htmlspecialchars(QR_TITLE) ?></h1>	
 <?php 
-	if (isset($_GET['id']) && !empty($_GET['id'])) { 
-		$title = isset($_GET['title']) ? $_GET['title'] : 'id=' . $_GET['id'];
-		QRView::render($title, $_SERVER['REQUEST_URI']);
+	}
+	if (isset($_GET['id']) && preg_match('/^[0-9a-zA-Z]{1,32}$/', $_GET['id'])) { 
+		$id = $_GET['id'];
+		$title = isset($_GET['title']) ? $_GET['title'] : 'id=' . $id;
+		QRView::render($id, $popup, $title, $_SERVER['REQUEST_URI']);
 	}
 	else {
 		$qrshow_url  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';

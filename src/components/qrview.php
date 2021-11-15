@@ -14,7 +14,7 @@
 namespace optinsoft\QRShow;
 
 class QRView {
-    public static function render($title, $request_uri) {
+    public static function render($id, $popup, $title, $request_uri) {
         /*
             $title = $_GET['title'];
             $request_uri = $_SERVER['REQUEST_URI'];
@@ -27,17 +27,19 @@ class QRView {
         ?>
         <img id="qr_image" src="<?= $img_url ?>" />
         <script>
-            let qr_image = document.getElementById('qr_image');
-            let cur_time = document.getElementById('cur_time');
-            cur_time.innerHTML = "Time: "  + (new Date()).toUTCString();
+            (function() {
+                let qr_image = document.getElementById('qr_image');
+                let cur_time = document.getElementById('cur_time');
+                cur_time.innerHTML = "Time: "  + (new Date()).toUTCString();
+            })();
 <?php 
     if (QR_AUTO_REFRESH > 0) { 
 ?>
-            setInterval(function(){
+            qr_interval = setInterval(function(){
                 let dt = new Date();
                 cur_time.innerHTML = "Time: "  + dt.toUTCString();
                 qr_image.src = "<?= $img_url ?>&r=" + dt.getTime();
-            }, <?= QR_AUTO_REFRESH * 1000 ?>);
+            }, <?= QR_AUTO_REFRESH * 1000 ?>);        
 <?php 
     } 
 ?>

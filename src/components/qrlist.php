@@ -27,13 +27,17 @@ class QRList {
 <?php        
         foreach ($list as $key) {
             $id = substr($key, strlen(QR_REDIS_PREFIX));
-			$json = json_decode($redis->get($key), true);
-			$title = isset($json['title']) && !empty($json['title']) ? $json['title'] : 'id=' . $id;
+            if (preg_match('/^[0-9a-zA-Z]{1,32}$/', $id)) {
+                $json = json_decode($redis->get($key), true);
+                $title = isset($json['title']) && !empty($json['title']) ? $json['title'] : 'id=' . $id;
 ?>
                 <tr>
-                    <td><img src="<?= $qrshow_url ?>img/qr_code.png" /></td><td><a target='_blank' href="<?= $qrshow_url ?>?id=<?= htmlspecialchars($id) ?>&title=<?= htmlspecialchars($title) ?>"><?= htmlspecialchars($title) ?></a></td>
+                    <td><img src="<?= $qrshow_url ?>img/qr_code.png" /></td><td>
+                        <a onclick="return qr_popup(this.href+'&popup=true');" target='_blank' href="<?= $qrshow_url ?>?id=<?= htmlspecialchars($id) ?>&title=<?= htmlspecialchars($title) ?>"><?= htmlspecialchars($title) ?></a>
+                    </td>
                 </tr>
-<?php                      
+<?php
+            }
         }
 ?>        
             </tbody>

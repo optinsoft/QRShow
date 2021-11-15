@@ -10,7 +10,7 @@
 
     Define your settings here. Example:
 
-        define('QR_AUTO_REFRESH', 10);
+        define('QR_AUTO_REFRESH', 5);
 
     Look full listing of configurations in config.php
 */
