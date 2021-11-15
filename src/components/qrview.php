@@ -25,7 +25,9 @@ class QRView {
         <?php
             $img_url = $request_uri . (strpos($request_uri, '?') !== false ? '&' : '?') . 't=' . round(microtime(true) * 1000);
         ?>
-        <img id="qr_image" src="<?= $img_url ?>" />
+        <div id='qr_image_container'>
+            <img id="qr_image" src="<?= $img_url ?>" />
+        </div>
         <script>
             (function() {
                 let qr_image = document.getElementById('qr_image');

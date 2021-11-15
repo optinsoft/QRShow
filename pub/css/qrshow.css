@@ -4,3 +4,10 @@
 #error {
     color: red
 }
+#qr_image_container {
+    background-color: black;
+    padding: 40px;
+}
+#qr_image {
+    background-color: white;
+}
