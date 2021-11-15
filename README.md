@@ -91,9 +91,20 @@ name | description
 
 ## Usage
 
-### Display QR code for the data in redis cache with id = `100` from space `0123456789abcdef`
+### The starting page
+```
+http://localhost/qrshow/
+```
+You will be asked for enter `space`.
 
-In your browser go to link:
+### Display the list of data in redis cache from space 0123456789abcdef 
+
+```
+http://localhost/qrshow/?space=0123456789abcdef
+```
+
+### Display QR code for the data in redis cache with id=100 from space 0123456789abcdef
+
 ```
 http://localhost/qrshow/?id=100&space=0123456789abcdef
 ```
