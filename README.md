@@ -93,24 +93,26 @@ name | description
 
 ## Usage
 
-### Display QR code for the data in redis cache with id = 100
+### Display QR code for the data in redis cache with id = `100` from space `0123456789abcdef`
 
 In your browser go to link:
 ```
-http://localhost/qrshow/?id=100
+http://localhost/qrshow/?id=100&space=0123456789abcdef
 ```
 
 ### Put data to the cache:
 ```bash
-curl -d "id=100&data=test&ttl=30&t=8f83ffeab1a30e2171520589a1d6a01f" -X POST http://localhost/qrshow/
+curl -d "id=100&space=0123456789abcdef&data=test&ttl=30&t=8f83ffeab1a30e2171520589a1d6a01f" -X POST http://localhost/qrshow/
 ```
 
 #### Parameters
 
 name | description
 ---- | -----------
-`id`|Data identifier
-`data`|Data content
-`ttl`|Time-to-live, seconds
-`s`|Signature, base64-encoded HMAC SHA-512 hash of `id` + `data` + `ttl` + `QR_API_KEY`
-`t`|Token
+`id`|Data identifier.
+`space`|Space - redis keys prefix. 16-40 hex digits.
+`data`|Data content.
+`title`|Data title.
+`ttl`|Time-to-live, seconds.
+`s`|Signature, base64-encoded HMAC SHA-512 hash of `id` + `space` + `data` + `ttl` + `QR_API_KEY`.
+`t`|Token.

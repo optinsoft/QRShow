@@ -29,7 +29,11 @@
         header("HTTP/1.1 400 wrong id");
         die('{"status":1,"error":"wrong id"}');
     }
-    if (!isset($_POST['data']) || empty($_POST['data'])) {
+    if (!isset($_POST['space']) || !preg_match('/^[0-9a-fA-F]{16,40}$/', $_POST['space'])) {
+        header("HTTP/1.1 400 wrong space");
+        die('{"status":7,"error":"wrong space"}');
+    }
+    if (!isset($_POST['data']) || empty($_POST['data']) || strlen($_POST['data']) > 4296) {
         header("HTTP/1.1 400 wrong data");
         die('{"status":2,"error":"wrong data"}');
     }
@@ -42,10 +46,11 @@
         die('{"status":3,"error":"wrong ttl"}');
     }
     $id = $_POST['id'];
+    $space = $_POST['space'];
     $data = $_POST['data'];
     $ttl = (int)$_POST['ttl'];
     if (!empty(QR_API_KEY)) {
-        $hash = base64_encode(hash_hmac('sha512', $id . $data . $ttl, QR_API_KEY, true));
+        $hash = base64_encode(hash_hmac('sha512', $id . $space . $data . $ttl, QR_API_KEY, true));
         if (!isset($_POST['s']) || $hash !== $_POST['s']) {
             header("HTTP/1.1 400 wrong hash");
             die('{"status":4,"error":"wrong hash"}');
@@ -65,8 +70,9 @@
         if (isset($_POST['title'])) {
             $info['title'] = $_POST['title'];
         }
-        $redis->set(QR_REDIS_PREFIX . $id, json_encode($info));
-        $redis->expire(QR_REDIS_PREFIX . $id, $ttl);
+        $key = QR_REDIS_PREFIX . $space . '.' . $id;
+        $redis->set($key, json_encode($info));
+        $redis->expire($key, $ttl);
 	} catch (\Exception $e) {
         header("HTTP/1.1 500 Fatal Error at #2");
 		die();

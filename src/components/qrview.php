@@ -14,7 +14,7 @@
 namespace optinsoft\QRShow;
 
 class QRView {
-    public static function render($id, $popup, $title, $request_uri) {
+    public static function render($title, $request_uri) {
         /*
             $title = $_GET['title'];
             $request_uri = $_SERVER['REQUEST_URI'];

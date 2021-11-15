@@ -16,9 +16,11 @@
 <?php
     $qrshow_url  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
     $qrshow_url .= $_SERVER['SERVER_NAME'];
-    $qrshow_url .= str_replace("\\","/",dirname($_SERVER['REQUEST_URI']));
-    QRList::render($qrshow_url, function($message) {
-        header('HTTP/1.1 500 Error! ' . $message);
-        die();
-    });
+    $qrshow_url .= str_replace("\\","/", dirname(dirname($_SERVER['REQUEST_URI'])));
+    if (isset($_GET['space']) && preg_match('/^[0-9a-fA-F]{16,40}$/', $_GET['space'])) {
+        QRList::render($_GET['space'], $qrshow_url, function($message) {
+            header('HTTP/1.1 500 Error! ' . $message);
+            die();
+        });
+    }
 ?>

@@ -14,19 +14,19 @@
 namespace optinsoft\QRShow;
 
 class QRListView {
-    public static function render($qrshow_url) {
+    public static function render($space, $qrshow_url) {
 ?>
         <h4 id="cur_time"></h4>
         <div id="dialogs"></div>
         <div id='qr_list'>
 <?php
             $error = '';
-            QRList::render($qrshow_url, function($message) use (&$error) {
+            QRList::render($space, $qrshow_url, function($message) use (&$error) {
                 $error = '500 Error! ' . $message;
             });
 ?>
         </div>
-        <div id="error" style="color:red"><?= htmlspecialchars($error) ?></div>
+        <div id="error"><?= htmlspecialchars($error) ?></div>
         <div id="qr_dialog"></div>
         <script>          
             function qr_popup(url) {
@@ -36,8 +36,8 @@ class QRListView {
                 $("#qr_dialog").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 500,
-                    height: 700,
+                    width: 400,
+                    height: 500,
                     title: <?= json_encode(QR_TITLE) ?>,
                     close: function () {
                         if (typeof qr_interval !== 'undefined') {
@@ -56,7 +56,7 @@ class QRListView {
             qr_list_interval = setInterval(function(){
                 let dt = new Date();
                 cur_time.innerHTML = "Time: "  + dt.toUTCString();
-                $('#qr_list').load('<?= $qrshow_url ?>list/', function(response, status, xhr) {
+                $('#qr_list').load('<?= $qrshow_url ?>list/?space=<?= htmlspecialchars($space) ?>', function(response, status, xhr) {
                     if (status == 'error') {
                         $('#error').html(xhr.status + ' ' + xhr.statusText );
                     }
