@@ -14,18 +14,13 @@
 namespace optinsoft\QRShow;
 
 class QRView {
-    public static function render($qr_id, $request_uri) {
+    public static function render($title, $request_uri) {
         /*
-            $qr_id = $_GET['id'];
+            $title = $_GET['title'];
             $request_uri = $_SERVER['REQUEST_URI'];
         */
 ?>
-        <table>
-            <tr>
-                <td><b>QR ID:</b></td>
-                <td><b><?= $qr_id ?></b></td>
-            </tr>
-        </table>
+        <h3><?= htmlspecialchars($title) ?></h3>
         <h4 id="cur_time"></h4>
         <?php
             $img_url = $request_uri . (strpos($request_uri, '?') !== false ? '&' : '?') . 't=' . round(microtime(true) * 1000);

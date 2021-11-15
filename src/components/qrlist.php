@@ -28,10 +28,10 @@ class QRList {
         foreach ($list as $key) {
             $id = substr($key, strlen(QR_REDIS_PREFIX));
 			$json = json_decode($redis->get($key), true);
-			$title = isset($json['title']) && !empty($json['title']) ? $json['title'] : $id;
+			$title = isset($json['title']) && !empty($json['title']) ? $json['title'] : 'id=' . $id;
 ?>
                 <tr>
-                    <td><a target='_blank' href="<?= $qrshow_url ?>?id=<?= $id ?>"><?= $title ?></a></td>
+                    <td><img src="<?= $qrshow_url ?>img/qr_code.png" /></td><td><a target='_blank' href="<?= $qrshow_url ?>?id=<?= htmlspecialchars($id) ?>&title=<?= htmlspecialchars($title) ?>"><?= htmlspecialchars($title) ?></a></td>
                 </tr>
 <?php                      
         }

@@ -25,7 +25,7 @@ class QRListView {
             });
 ?>
         </div>
-        <div id="error" style="color:red"><?= $error ?></div>
+        <div id="error" style="color:red"><?= htmlspecialchars($error) ?></div>
         <script>            
             $('#cur_time').html("Time: "  + (new Date()).toUTCString());
 <?php 
