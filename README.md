@@ -76,9 +76,7 @@ setsebool -P httpd_can_network_connect on
 
 ### Configuring
 
-QRShow configuration file located at `/conf/config.php`
-
-Please, don't edit this file directly. Instead put your configuration settings to `/conf/user_config.php`. You can create `/conf/user_config.php` by copying it from `/conf/_user_config.php`.
+QRShow configuration file located at `/conf/config.php`. Please, don't edit this file directly. Instead put your configuration settings to `/conf/user_config.php`. You can create `/conf/user_config.php` by copying it from `/conf/_user_config.php`.
 
 ####  `QRShow` constants
 name | description
