@@ -20,6 +20,8 @@
         QR_TOKEN - from config
         QR_REDIS_PREFIX - from config
         QR_REDIS_PREFIX - from config
+        QR_MIN_TTL - from config
+        QR_MAX_TTL - from config
 */
     use Predis\{Client};
 
