@@ -11,3 +11,6 @@
 #qr_image {
     background-color: white;
 }
+fieldset {
+    border-width: 1px;
+}

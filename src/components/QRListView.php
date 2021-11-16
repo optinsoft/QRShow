@@ -52,7 +52,7 @@ class QRListView {
 ?>
             qr_list_interval = setInterval(function(){
                 let dt = new Date();
-                cur_time.innerHTML = "Time: "  + dt.toUTCString();
+                $('#cur_time').html("Time: "  + dt.toUTCString());
                 $('#qr_list').load('<?= $qrshow_url ?>list/?space=<?= htmlspecialchars($space) ?>', function(response, status, xhr) {
                     if (status == 'error') {
                         $('#error').html(xhr.status + ' ' + xhr.statusText );
