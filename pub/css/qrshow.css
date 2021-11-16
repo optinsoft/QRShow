@@ -4,11 +4,11 @@
 #error {
     color: red
 }
-#qr_image_container {
+.qr-image-container {
     background-color: black;
     padding: 40px;
 }
-#qr_image {
+.qr-image {
     background-color: white;
 }
 fieldset {

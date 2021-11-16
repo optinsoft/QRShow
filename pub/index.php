@@ -53,8 +53,9 @@
 <?php 
 	}
 	if (isset($_GET['id']) && preg_match(QRPatterns::ID, $_GET['id'])) { 
-		$title = isset($_GET['title']) ? $_GET['title'] : 'id=' . $_GET['id'];
-		QRView::render($title, $_SERVER['REQUEST_URI']);
+		$id = $_GET['id'];
+		$title = isset($_GET['title']) ? $_GET['title'] : 'id=' . $id;
+		QRView::render($id, $title, $_SERVER['REQUEST_URI']);
 	}
 	else 
 	{

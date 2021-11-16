@@ -34,7 +34,7 @@ class QRListView {
                     autoOpen: false,
                     modal: true,
                     width: 400,
-                    height: 500,
+                    height: 550,
                     title: <?= json_encode(QR_TITLE) ?>,
                     close: function () {
                         if (typeof qr_interval !== 'undefined') {

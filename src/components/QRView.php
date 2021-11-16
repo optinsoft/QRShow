@@ -11,33 +11,28 @@
 namespace optinsoft\QRShow;
 
 class QRView {
-    public static function render($title, $request_uri) {
-        /*
-            $title = $_GET['title'];
-            $request_uri = $_SERVER['REQUEST_URI'];
-        */
+    
+    public static function render($id, $title, $request_uri) {
+        $cur_time_id = 'cur_time_' . $id;
+        $qr_image_id = 'qr_image_' . $id;
 ?>
         <h3><?= htmlspecialchars($title) ?></h3>
-        <h4 id="cur_time"></h4>
+        <h4 id="<?= $cur_time_id ?>"></h4>
         <?php
             $img_url = $request_uri . (strpos($request_uri, '?') !== false ? '&' : '?') . 't=' . round(microtime(true) * 1000);
         ?>
-        <div id='qr_image_container'>
-            <img id="qr_image" src="<?= $img_url ?>" />
+        <div class='qr-image-container'>
+            <img id="<?= $qr_image_id ?>" class="qr-image" src="<?= $img_url ?>" />
         </div>
         <script>
-            (function() {
-                let qr_image = document.getElementById('qr_image');
-                let cur_time = document.getElementById('cur_time');
-                cur_time.innerHTML = "Time: "  + (new Date()).toUTCString();
-            })();
+            $('#<?= $cur_time_id ?>').html("Time: "  + (new Date()).toUTCString());
 <?php 
     if (QR_AUTO_REFRESH > 0) { 
 ?>
             qr_interval = setInterval(function(){
                 let dt = new Date();
-                cur_time.innerHTML = "Time: "  + dt.toUTCString();
-                qr_image.src = "<?= $img_url ?>&r=" + dt.getTime();
+                $('#<?= $cur_time_id ?>').html("Time: "  + dt.toUTCString());
+                $('#<?= $qr_image_id ?>').attr("src", "<?= $img_url ?>&r=" + dt.getTime());
             }, <?= QR_AUTO_REFRESH * 1000 ?>);        
 <?php 
     } 
