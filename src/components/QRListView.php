@@ -33,7 +33,7 @@ class QRListView {
                 $("#qr_dialog").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 400,
+                    width: 410,
                     height: 550,
                     title: <?= json_encode(QR_TITLE) ?>,
                     close: function () {
