@@ -10,15 +10,14 @@
     @author Vitaly Yakovlev <vitaly@optinsoft.net>
     @copyright 2021 Vitaly Yakovlev
     @license BSD 2-Clause
-
-	require global definitions:
-		QR_REDIS_PREFIX - from config
 */
+	namespace optinsoft\QRShow;
+
 	use chillerlan\QRCode\{QRCode, QROptions};
 	use Predis\{Client};
 
-	if (isset($_GET['id']) && preg_match('/^[0-9a-zA-Z]{1,32}$/', $_GET['id']) &&
-		isset($_GET['space']) && preg_match('/^[0-9a-fA-F]{16,40}$/', $_GET['space'])) {
+	if (isset($_GET['id']) && preg_match(QRPatterns::ID, $_GET['id']) &&
+		isset($_GET['space']) && preg_match(QRPatterns::SPACE, $_GET['space'])) {
 		$id = $_GET['id'];
 		$space = $_GET['space'];
 		try {
@@ -31,14 +30,9 @@
 			die();
 		}
 		if (isset($data) && !empty($data)) {
-			$options = new QROptions([
-				'outputType'   => QRCode::OUTPUT_IMAGE_PNG,
-				'eccLevel'     => QRCode::ECC_L,
-				'imageBase64'  => false,
-			]);
+			$options = new QROptions(QRConstants::QRCODE_OPTIONS);
 
 			header('Content-type: image/png');
-			//header('qr-data: ' . $data);
 			echo (new QRCode($options))->render($data);
 
 			exit();

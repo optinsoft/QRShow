@@ -50,7 +50,7 @@
 	<h1><?= htmlspecialchars(QR_TITLE) ?></h1>	
 <?php 
 	}
-	if (isset($_GET['id']) && preg_match('/^[0-9a-zA-Z]{1,32}$/', $_GET['id'])) { 
+	if (isset($_GET['id']) && preg_match(QRPatterns::ID, $_GET['id'])) { 
 		$title = isset($_GET['title']) ? $_GET['title'] : 'id=' . $_GET['id'];
 		QRView::render($title, $_SERVER['REQUEST_URI']);
 	}
@@ -60,7 +60,7 @@
 		$qrshow_url .= $_SERVER['SERVER_NAME'];
 		$qrshow_url .= str_replace("\\","/", dirname($_SERVER['PHP_SELF']));
 		$qrshow_url = rtrim($qrshow_url, '/') . '/';
-		if (isset($_GET['space']) && preg_match('/^[0-9a-fA-F]{16,40}$/', $_GET['space'])) {
+		if (isset($_GET['space']) && preg_match(QRPatterns::SPACE, $_GET['space'])) {
 			QRListView::render($_GET['space'], $qrshow_url);
 		}
 		else {

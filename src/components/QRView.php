@@ -6,10 +6,7 @@
     @package optinsoft\QRShow
     @author Vitaly Yakovlev <vitaly@optinsoft.net>
     @copyright 2021 Vitaly Yakovlev
-    @license BSD 2-Clause
-
-    require global definitions: 
-        QR_AUTO_REFRESH - from config    
+    @license BSD 2-Clause   
 */
 namespace optinsoft\QRShow;
 

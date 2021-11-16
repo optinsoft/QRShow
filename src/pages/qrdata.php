@@ -14,36 +14,30 @@
     @author Vitaly Yakovlev <vitaly@optinsoft.net>
     @copyright 2021 Vitaly Yakovlev
     @license BSD 2-Clause
-
-    require global definitions:
-        QR_API_KEY - from config
-        QR_TOKEN - from config
-        QR_REDIS_PREFIX - from config
-        QR_REDIS_PREFIX - from config
-        QR_MIN_TTL - from config
-        QR_MAX_TTL - from config
 */
+    namespace optinsoft\QRShow;
+
     use Predis\{Client};
 
     header('Content-Type: application/json');
 
-    if (!isset($_POST['id']) || !preg_match('/^[0-9a-zA-Z]{1,32}$/', $_POST['id'])) {
+    if (!isset($_POST['id']) || !preg_match(QRPatterns::ID, $_POST['id'])) {
         header("HTTP/1.1 400 wrong id");
         die('{"status":1,"error":"wrong id"}');
     }
-    if (!isset($_POST['space']) || !preg_match('/^[0-9a-fA-F]{16,40}$/', $_POST['space'])) {
+    if (!isset($_POST['space']) || !preg_match(QRPatterns::SPACE, $_POST['space'])) {
         header("HTTP/1.1 400 wrong space");
         die('{"status":7,"error":"wrong space"}');
     }
-    if (!isset($_POST['data']) || empty($_POST['data']) || strlen($_POST['data']) > 4296) {
+    if (!isset($_POST['data']) || !preg_match(QRPatterns::DATA, $_POST['data'])) {
         header("HTTP/1.1 400 wrong data");
         die('{"status":2,"error":"wrong data"}');
     }
-    if (isset($_POST['title']) && !preg_match('/^[a-zA-Z0-9#$_.-]{1,128}$/', $_POST['title'])) {
+    if (isset($_POST['title']) && !preg_match(QRPatterns::TITLE, $_POST['title'])) {
         header("HTTP/1.1 400 wrong title");
         die('{"status":6,"error":"wrong title"}');
     }
-    if (!isset($_POST['ttl']) || !preg_match('/^[0-9]{1,10}$/', $_POST['ttl'])) {
+    if (!isset($_POST['ttl']) || !preg_match(QRPatterns::TTL, $_POST['ttl'])) {
         header("HTTP/1.1 400 wrong ttl");
         die('{"status":3,"error":"wrong ttl"}');
     }

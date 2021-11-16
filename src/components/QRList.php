@@ -28,7 +28,7 @@ class QRList {
 <?php        
         foreach ($list as $key) {
             $id = substr($key, strlen($key_prefix));
-            if (preg_match('/^[0-9a-zA-Z]{1,32}$/', $id)) {
+            if (preg_match(QRPatterns::ID, $id)) {
                 $json = json_decode($redis->get($key), true);
                 $title = isset($json['title']) && !empty($json['title']) ? $json['title'] : 'id=' . $id;
 ?>
