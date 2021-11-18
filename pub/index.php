@@ -15,12 +15,12 @@
 
 	//routing
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		require __DIR__ . '/../src/pages/qrdata.php';
+		require __DIR__ . '/../src/pages/QRData.php';
 		exit;
 	}
 
 	if (preg_match('/^image\/.*$/', $_SERVER['HTTP_ACCEPT'])) {
-		require __DIR__ . '/../src/pages/qrimage.php';
+		require __DIR__ . '/../src/pages/QRImage.php';
 		exit;
 	}
 

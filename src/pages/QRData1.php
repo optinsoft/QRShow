@@ -49,17 +49,47 @@
         header("HTTP/1.1 400 wrong ttl");
         die('{"status":3,"error":"wrong ttl"}');
     }
-    if (!empty(QR_API_KEY)) {
-        $hash = base64_encode(hash_hmac('sha512', $id . $space . $data . $ttl, QR_API_KEY, true));
-        if (!isset($_POST['s']) || $hash !== $_POST['s']) {
-            header("HTTP/1.1 400 wrong hash");
-            die('{"status":4,"error":"wrong hash"}');
+    if (QR_API_KEY_OR_TOKEN) {
+        $authorized = false;
+        if (!empty(QR_API_KEY) && isset($_POST['s']) && !empty($_POST['s'])) {
+            $hash = base64_encode(hash_hmac('sha512', $id . $space . $data . $ttl, QR_API_KEY, true));
+            if ($hash === $_POST['s']) {
+                header("HTTP/1.1 400 wrong hash");
+                die('{"status":4,"error":"wrong hash"}');
+            }
+            $authorized = true;
+        }
+        if (!$authorized && !empty(QR_TOKEN) && isset($_POST['t']) && !empty($_POST['t'])) {
+            if (QR_TOKEN !== $_POST['t']) {
+                header("HTTP/1.1 400 wrong token");
+                die('{"status":5,"error":"wrong token"}');    
+            }
+            $authorized = true;
+        }
+        if (!$authorized) {
+            if (!empty(QR_API_KEY)) {
+                header("HTTP/1.1 400 wrong hash");
+                die('{"status":4,"error":"wrong hash"}');
+            }
+            if (!empty(QR_TOKEN)) {
+                header("HTTP/1.1 400 wrong token");
+                die('{"status":5,"error":"wrong token"}');
+            }
         }
     }
-    if (!empty(QR_TOKEN)) {
-        if (!isset($_POST['t']) || QR_TOKEN !== $_POST['t']) {
-            header("HTTP/1.1 400 wrong token");
-            die('{"status":5,"error":"wrong token"}');    
+    else {
+        if (!empty(QR_API_KEY)) {
+            $hash = base64_encode(hash_hmac('sha512', $id . $space . $data . $ttl, QR_API_KEY, true));
+            if (!isset($_POST['s']) || $hash !== $_POST['s']) {
+                header("HTTP/1.1 400 wrong hash");
+                die('{"status":4,"error":"wrong hash"}');
+            }
+        }
+        if (!empty(QR_TOKEN)) {
+            if (!isset($_POST['t']) || QR_TOKEN !== $_POST['t']) {
+                header("HTTP/1.1 400 wrong token");
+                die('{"status":5,"error":"wrong token"}');    
+            }
         }
     }
     try {

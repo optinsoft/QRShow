@@ -19,6 +19,7 @@
     if (!defined('QR_TITLE')) define('QR_TITLE', 'QR Show');
     if (!defined('QR_API_KEY')) define('QR_API_KEY', '');
     if (!defined('QR_TOKEN')) define('QR_TOKEN', '8f83ffeab1a30e2171520589a1d6a01f');
+    if (!defined('QR_API_KEY_OR_TOKEN')) define('QR_API_KEY_OR_TOKEN', false);
     if (!defined('QR_REDIS_HOST')) define('QR_REDIS_HOST', '127.0.0.1');
     if (!defined('QR_REDIS_PORT')) define('QR_REDIS_PORT', 6379);
     if (!defined('QR_REDIS_PREFIX')) define('QR_REDIS_PREFIX', 'qr.');
