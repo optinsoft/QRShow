@@ -44,7 +44,7 @@ class QRList {
 ?>
             <li id ="qr_list_item_<?= htmlspecialchars($id) ?>" class="list-group-item" qr_item_id="<?= htmlspecialchars($id) ?>">
                 <img src="<?= $qrshow_url ?>img/qr_code.png" />
-                    <a onclick="return qr_popup('<?= htmlspecialchars($id) ?>', this.href+'&popup=true');" target='_blank' href="<?= htmlspecialchars($qrshow_url) ?>?id=<?= htmlspecialchars($id) ?>&space=<?= htmlspecialchars($space) ?>&title=<?= htmlspecialchars($title) ?>"><?= htmlspecialchars($title) ?></a>
+                    <a onclick="return qr_popup(this, '<?= htmlspecialchars($id) ?>', this.href+'&popup=true');" target='_blank' href="<?= htmlspecialchars($qrshow_url) ?>?id=<?= htmlspecialchars($id) ?>&space=<?= htmlspecialchars($space) ?>&title=<?= htmlspecialchars($title) ?>"><?= htmlspecialchars($title) ?></a>
             </li>
 <?php
         }

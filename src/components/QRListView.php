@@ -15,7 +15,7 @@ class QRListView {
 ?>
         <div class="qr_space" id="space">Space: <?= htmlspecialchars($space) ?></div>
         <div class="qr_time" id="cur_time"></div>
-        <div class="bg-white border rounded-5 p-3 mt-3 col-3">
+        <div class="qr-list-container bg-white border rounded-5 p-3 mt-3">
             <div class="my-2">QR codes:</div>
             <div id='qr_list'>
 <?php
@@ -52,12 +52,17 @@ class QRListView {
                 qr_list_items = new_qr_list_items;
             }
             window.onload = refresh_qr_list_items;
-            function qr_popup(id, url) {
+            function qr_popup(clicked, id, url) {
                 let qr_dialog = $("#qr_dialog");
                 qr_dialog.dialog({
                     autoOpen: false,
                     modal: true,
                     dialogClass: 'qr-dialog',
+                    position: {
+                        my: "left top",
+                        at: "left bottom",
+                        of: clicked
+                    },
                     width: 'auto',
                     height: 'auto',
                     title: <?= json_encode(QR_TITLE) ?>,
