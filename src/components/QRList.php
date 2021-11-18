@@ -23,8 +23,7 @@ class QRList {
             return;
         }
 ?>
-        <table>
-            <tbody>
+        <ul class="list-group">
 <?php        
         foreach ($list as $key) {
             $id = substr($key, strlen($key_prefix));
@@ -32,17 +31,15 @@ class QRList {
                 $json = json_decode($redis->get($key), true);
                 $title = isset($json['title']) && !empty($json['title']) ? $json['title'] : 'id=' . $id;
 ?>
-                <tr>
-                    <td><img src="<?= $qrshow_url ?>img/qr_code.png" /></td><td>
+                <li class="list-group-item">
+                    <img src="<?= $qrshow_url ?>img/qr_code.png" />
                         <a onclick="return qr_popup(this.href+'&popup=true');" target='_blank' href="<?= $qrshow_url ?>?id=<?= htmlspecialchars($id) ?>&space=<?= htmlspecialchars($space) ?>&title=<?= htmlspecialchars($title) ?>"><?= htmlspecialchars($title) ?></a>
-                    </td>
-                </tr>
+                </li>
 <?php
             }
         }
 ?>        
-            </tbody>
-        </table>
+        </ul>
 <?php        
     }
 }

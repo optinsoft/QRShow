@@ -13,7 +13,8 @@ namespace optinsoft\QRShow;
 class QRListView {
     public static function render($space, $qrshow_url) {
 ?>
-        <h4 id="cur_time"></h4>
+        <div class="qr_space" id="space">Space: <?= $space ?></div>
+        <div class="qr_time" id="cur_time"></div>
         <div id="dialogs"></div>
         <div id='qr_list'>
 <?php
@@ -33,8 +34,9 @@ class QRListView {
                 $("#qr_dialog").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 410,
-                    height: 550,
+                    dialogClass: 'qr-dialog',
+                    width: 'auto',
+                    height: 'auto',
                     title: <?= json_encode(QR_TITLE) ?>,
                     close: function () {
                         if (typeof qr_interval !== 'undefined') {

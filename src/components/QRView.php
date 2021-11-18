@@ -16,8 +16,8 @@ class QRView {
         $cur_time_id = 'cur_time_' . $id;
         $qr_image_id = 'qr_image_' . $id;
 ?>
-        <h3><?= htmlspecialchars($title) ?></h3>
-        <h4 id="<?= $cur_time_id ?>"></h4>
+        <div class='qr_title'><?= htmlspecialchars($title) ?></div>
+        <div class='qr_time' id="<?= $cur_time_id ?>"></div>
         <?php
             $img_url = $request_uri . (strpos($request_uri, '?') !== false ? '&' : '?') . 't=' . round(microtime(true) * 1000);
         ?>
