@@ -15,7 +15,7 @@ class QRListView {
 ?>
         <div class="qr_space" id="space">Space: <?= htmlspecialchars($space) ?></div>
         <div class="qr_time" id="cur_time"></div>
-        <div class="bg-white border rounded-5 p-3 mt-3">
+        <div class="bg-white border rounded-5 p-3 mt-3 col-3">
             <div class="my-2">QR codes:</div>
             <div id='qr_list'>
 <?php
