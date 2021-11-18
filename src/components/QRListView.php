@@ -13,36 +13,67 @@ namespace optinsoft\QRShow;
 class QRListView {
     public static function render($space, $qrshow_url) {
 ?>
-        <div class="qr_space" id="space">Space: <?= $space ?></div>
+        <div class="qr_space" id="space">Space: <?= htmlspecialchars($space) ?></div>
         <div class="qr_time" id="cur_time"></div>
-        <div id="dialogs"></div>
-        <div id='qr_list'>
+        <div class="bg-white border rounded-5 p-3 mt-3">
+            <div class="my-2">QR codes:</div>
+            <div id='qr_list'>
 <?php
-            $error = '';
-            QRList::render($space, $qrshow_url, function($message) use (&$error) {
-                $error = '500 Error! ' . $message;
-            });
+                $error = '';
+                QRList::render($space, $qrshow_url, function($message) use (&$error) {
+                    $error = '500 Error! ' . $message;
+                });
 ?>
+            </div>
         </div>
         <div id="error"><?= htmlspecialchars($error) ?></div>
         <div id="qr_dialog"></div>
-        <script>          
-            function qr_popup(url) {
-                if ($('#qr_dialog').length == 0) {
-                    return true;
-                }
-                $("#qr_dialog").dialog({
+        <script>   
+            qr_intervals = [];
+            qr_list_items = [];
+            qr_open_dialogs = [];
+            function refresh_qr_list_items() {
+                let new_qr_list_items = [];
+                let qr_list = $('#qr_list li');
+                for (let li of qr_list) {
+                    let qr_item_id = $(li).attr('qr_item_id');
+                    if (<?= QRPatterns::ID ?>.test(qr_item_id)) {
+                        new_qr_list_items[qr_item_id] = li;
+                    }
+                } 
+                for (let id in qr_list_items) {
+                    if (typeof new_qr_list_items[id] == 'undefined') {
+                        let open_dialog = qr_open_dialogs[id];
+                        if (typeof open_dialog !== 'undefined') {
+                            open_dialog.dialog('close');
+                        }
+                    }
+                }                
+                qr_list_items = new_qr_list_items;
+            }
+            window.onload = refresh_qr_list_items;
+            function qr_popup(id, url) {
+                let qr_dialog = $("#qr_dialog");
+                qr_dialog.dialog({
                     autoOpen: false,
                     modal: true,
                     dialogClass: 'qr-dialog',
                     width: 'auto',
                     height: 'auto',
                     title: <?= json_encode(QR_TITLE) ?>,
+                    open: function () {
+                        qr_open_dialogs[id] = $(this);
+                    },
                     close: function () {
-                        if (typeof qr_interval !== 'undefined') {
-                            clearInterval(qr_interval);
-                            delete qr_interval;
+                        if (typeof qr_intervals[id] !== 'undefined') {
+                            clearInterval(qr_intervals[id]);
+                            delete qr_intervals[id];
                         }
+                        let qr_popup_content = document.getElementById('qr_popup_content_' + id);
+                        if (typeof qr_popup_content !== 'undefined') {
+                            qr_popup_content.remove();
+                        }
+                        delete qr_open_dialogs[id];
                     }
                 });
                 $('#qr_dialog').load(url).dialog('open');
@@ -52,15 +83,16 @@ class QRListView {
 <?php 
     if (QR_AUTO_REFRESH > 0) { 
 ?>
-            qr_list_interval = setInterval(function(){
+            setInterval(function(){
                 let dt = new Date();
                 $('#cur_time').html("Time: "  + dt.toUTCString());
-                $('#qr_list').load('<?= $qrshow_url ?>list/?space=<?= htmlspecialchars($space) ?>', function(response, status, xhr) {
+                $('#qr_list').load('<?= htmlspecialchars($qrshow_url) ?>list/?space=<?= htmlspecialchars($space) ?>', function(response, status, xhr) {
                     if (status == 'error') {
                         $('#error').html(xhr.status + ' ' + xhr.statusText );
                     }
                     else {
-                        $('#error').html('');
+                        $('#error').html('');  
+                        refresh_qr_list_items();
                     }
                 });
             }, <?= QR_AUTO_REFRESH * 1000 ?>);

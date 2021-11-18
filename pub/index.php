@@ -26,18 +26,28 @@
 
 	header('Content-Type: text/html; charset=utf-8');
 ?>
+<?php
+	if (isset($_GET['id']) && preg_match(QRPatterns::ID, $_GET['id'])) { 
+		$id = $_GET['id'];
+	}
+	else {
+		$id = null;
+	}
+	$popup = isset($_GET['popup']) && (bool)$_GET['popup'];
+	if (!$popup) {
+?>
 <html>
 <head>
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<title><?= htmlspecialchars(QR_TITLE) ?></title>
+	<title><?= QR_TITLE ?></title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"/>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<link rel="stylesheet" href="css/mdb.min.css"/>
 	<script src="js/mdb.min.js"></script>	
-	<link rel="stylesheet" href="css/qrshow.css?r=<?=  microtime(true) ?>"/>
+	<link rel="stylesheet" href="css/qrshow.css?r=<?=  htmlspecialchars(microtime(true)) ?>"/>
 	<style>
 		body{
 			margin: 5em;
@@ -46,15 +56,16 @@
 	</style>
 </head>
 <body>
-<?php
-	$popup = isset($_GET['popup']) && (bool)$_GET['popup'];
-	if (!$popup) {
-?>
-	<h1><?= htmlspecialchars(QR_TITLE) ?></h1>	
+	<h1><?= QR_TITLE ?></h1>	
 <?php 
-	}
-	if (isset($_GET['id']) && preg_match(QRPatterns::ID, $_GET['id'])) { 
-		$id = $_GET['id'];
+	} // end if (!$popup)
+	else {
+		// if (!popup)
+?>
+	<div id="qr_popup_content<?= !is_null($id) ? '_' . htmlspecialchars($id) : '' ?>">
+<?php
+	} // end if (popup)
+	if (!is_null($id)) { 
 		$title = isset($_GET['title']) ? $_GET['title'] : 'id=' . $id;
 		QRView::render($id, $title, $_SERVER['REQUEST_URI']);
 	}
@@ -75,5 +86,15 @@
 <noscript>
 	For full functionality of this site it is necessary to enable JavaScript.
 </noscript>
+<?php if (!$popup) { ?>
 </body>
 </html>
+<?php 
+	} // endif (!$popup)
+	else {
+		// if (!popup)
+?>
+	</div>
+<?php
+	} // end if (popup)
+?>

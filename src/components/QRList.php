@@ -23,20 +23,30 @@ class QRList {
             return;
         }
 ?>
-        <ul class="list-group">
+        <ul id ='qr_list' class="list-group">
 <?php        
+        $id_list = [];
         foreach ($list as $key) {
             $id = substr($key, strlen($key_prefix));
             if (preg_match(QRPatterns::ID, $id)) {
-                $json = json_decode($redis->get($key), true);
-                $title = isset($json['title']) && !empty($json['title']) ? $json['title'] : 'id=' . $id;
-?>
-                <li class="list-group-item">
-                    <img src="<?= $qrshow_url ?>img/qr_code.png" />
-                        <a onclick="return qr_popup(this.href+'&popup=true');" target='_blank' href="<?= $qrshow_url ?>?id=<?= htmlspecialchars($id) ?>&space=<?= htmlspecialchars($space) ?>&title=<?= htmlspecialchars($title) ?>"><?= htmlspecialchars($title) ?></a>
-                </li>
-<?php
+                $id_list[$id] = $key;
             }
+        }
+        ksort($id_list);
+        foreach($id_list as $id => $key) {
+            try {
+                $json = json_decode($redis->get($key), true);
+            } catch (\Exception $e) {
+                $onerror('Fatal Error at #4');
+                return;
+            }
+            $title = isset($json['title']) && !empty($json['title']) ? $json['title'] : 'id=' . $id;
+?>
+            <li id ="qr_list_item_<?= htmlspecialchars($id) ?>" class="list-group-item" qr_item_id="<?= htmlspecialchars($id) ?>">
+                <img src="<?= $qrshow_url ?>img/qr_code.png" />
+                    <a onclick="return qr_popup('<?= htmlspecialchars($id) ?>', this.href+'&popup=true');" target='_blank' href="<?= htmlspecialchars($qrshow_url) ?>?id=<?= htmlspecialchars($id) ?>&space=<?= htmlspecialchars($space) ?>&title=<?= htmlspecialchars($title) ?>"><?= htmlspecialchars($title) ?></a>
+            </li>
+<?php
         }
 ?>        
         </ul>
