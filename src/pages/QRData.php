@@ -4,6 +4,7 @@
 
     HTTP POST parameters:
         id - qr code identifier, required
+        space - redis keys prefix
         data - qr code data
         ttl - qr code expire time in seconds
         s - signature, required when QR_API_KEY is not empty 
