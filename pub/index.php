@@ -25,6 +25,17 @@
 	}
 
 	header('Content-Type: text/html; charset=utf-8');
+
+	$qrshow_url  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+	$qrshow_url .= $_SERVER['SERVER_NAME'];
+	if (isset($_SERVER['QRSHOW_ROOT'])) {
+		$qrshow_url .= $_SERVER['QRSHOW_ROOT'];
+	}
+	else {
+		$qrshow_url .= str_replace("\\","/", dirname($_SERVER['PHP_SELF']));
+	}
+	$qrshow_url = rtrim($qrshow_url, '/') . '/';
+	$qrshow_spaces_dir = isset($_SERVER['QRSHOW_SPACES_DIR']) && ('1' === $_SERVER['QRSHOW_SPACES_DIR']);
 ?>
 <?php
 	if (isset($_GET['id']) && preg_match(QRPatterns::ID, $_GET['id'])) { 
@@ -45,9 +56,9 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"/>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-	<link rel="stylesheet" href="css/mdb.min.css"/>
-	<script src="js/mdb.min.js"></script>	
-	<link rel="stylesheet" href="css/qrshow.css?r=<?=  htmlspecialchars(microtime(true)) ?>"/>
+	<link rel="stylesheet" href="<?= $qrshow_url ?>css/mdb.min.css"/>
+	<script src="<?= $qrshow_url ?>js/mdb.min.js"></script>	
+	<link rel="stylesheet" href="<?= $qrshow_url ?>css/qrshow.css?r=<?=  htmlspecialchars(microtime(true)) ?>"/>
 	<style>
 		body{
 			margin: 5em;
@@ -71,15 +82,13 @@
 	}
 	else 
 	{
-		$qrshow_url  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
-		$qrshow_url .= $_SERVER['SERVER_NAME'];
-		$qrshow_url .= str_replace("\\","/", dirname($_SERVER['PHP_SELF']));
-		$qrshow_url = rtrim($qrshow_url, '/') . '/';
-		if (isset($_GET['space']) && preg_match(QRPatterns::SPACE, $_GET['space'])) {
-			QRListView::render($_GET['space'], $qrshow_url);
-		}
-		else {
-			QRSpaceForm::render($qrshow_url);
+		if (isset($_GET['space'])) {
+			if (preg_match(QRPatterns::SPACE, $_GET['space'])) {
+				QRListView::render($_GET['space'], $qrshow_url);
+			}
+			else {
+				QRSpaceForm::render($qrshow_url, $qrshow_spaces_dir);
+			}
 		}
 	}
 ?>

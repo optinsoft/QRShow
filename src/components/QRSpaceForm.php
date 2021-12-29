@@ -11,7 +11,7 @@
 namespace optinsoft\QRShow;
 
 class QRSpaceForm {
-    public static function render($qrshow_url) {
+    public static function render($qrshow_url, $qrshow_spaces_dir) {
 ?>
         <form id="spaceForm" name="spaceForm" method="GET" action="<?= htmlspecialchars($qrshow_url) ?>" onsubmit="return validateForm()">
             <label for="space">Please, enter space (16-40 hex digits)</label>
@@ -26,6 +26,10 @@ class QRSpaceForm {
                     $('#error').html('Wrong space!');
                     return false;
                 }
+<?php if ($qrshow_spaces_dir) { ?>
+                window.location = "<?= htmlspecialchars($qrshow_url) ?>spaces/" + space + "/";
+                return false;
+<?php } ?>                
             }
         </script>
 <?php
