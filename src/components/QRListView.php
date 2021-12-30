@@ -59,8 +59,8 @@ class QRListView {
                     modal: true,
                     dialogClass: 'qr-dialog',
                     position: {
-                        my: "left top",
-                        at: "left bottom",
+                        my: "center top",
+                        at: "center bottom",
                         of: clicked
                     },
                     width: 'auto',

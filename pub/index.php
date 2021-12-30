@@ -59,15 +59,10 @@
 	<link rel="stylesheet" href="<?= $qrshow_url ?>css/mdb.min.css"/>
 	<script src="<?= $qrshow_url ?>js/mdb.min.js"></script>	
 	<link rel="stylesheet" href="<?= $qrshow_url ?>css/qrshow.css?r=<?=  htmlspecialchars(microtime(true)) ?>"/>
-	<style>
-		body{
-			margin: 5em;
-			padding: 0;
-		}
-	</style>
 </head>
 <body>
-	<h1><?= QR_TITLE ?></h1>	
+	<div class="col-md-6 offset-md-3">
+		<h1><?= QR_TITLE ?></h1>	
 <?php 
 	} // end if (!$popup)
 	else {
@@ -79,11 +74,13 @@
 	if (!is_null($id)) { 
 		$title = isset($_GET['title']) ? $_GET['title'] : 'id=' . $id;
 		QRView::render($id, $title, $_SERVER['REQUEST_URI']);
+		if (!$popup) {
 ?>
-		<div>
-			<a class="btn btn-primary" role="button" href="<?= $qrshow_url ?>">Back</a>
-		</div>
+			<div>
+				<a class="btn btn-primary" role="button" href="<?= $qrshow_url ?>">Back</a>
+			</div>
 <?php
+		}
 	}
 	else 
 	{
@@ -104,6 +101,7 @@
 	For full functionality of this site it is necessary to enable JavaScript.
 </noscript>
 <?php if (!$popup) { ?>
+	</div>
 </body>
 </html>
 <?php 
