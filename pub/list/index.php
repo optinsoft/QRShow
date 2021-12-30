@@ -14,7 +14,7 @@
     require_once __DIR__ . '/../../conf/config.php';	
 ?>
 <?php
-    $qrshow_url  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+    $qrshow_url  = '//'; //isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
     $qrshow_url .= $_SERVER['SERVER_NAME'];
     $qrshow_url .= str_replace("\\","/", dirname(dirname($_SERVER['PHP_SELF'])));
     $qrshow_url = rtrim($qrshow_url, '/') . '/';

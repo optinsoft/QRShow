@@ -13,7 +13,7 @@
 	require_once __DIR__ . '/../vendor/autoload.php';
 	require_once __DIR__ . '/../conf/config.php';	
 
-	$qrshow_url  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+	$qrshow_url  = '//'; //isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
 	$qrshow_url .= $_SERVER['SERVER_NAME'];
 	if (isset($_SERVER['QRSHOW_ROOT'])) {
 		$qrshow_url .= $_SERVER['QRSHOW_ROOT'];
