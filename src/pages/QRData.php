@@ -167,13 +167,20 @@
 	}
     if ($public && isset($qrshow_url)) {
         if (isset($qrshow_spaces_dir) && $qrshow_spaces_dir) {
-            $url =  $qrshow_url . 'spaces/' . $space .'/';
+            $url = $qrshow_url . 'spaces/' . htmlspecialchars($space) .'/';
         }
         else {
-            $url =  $qrshow_url . '?space=' . $space;
+            $url = $qrshow_url . '?space=' . htmlspecialchars($space);
+        }
+        if (isset($title)) {
+            $url .= '&title=' . htmlspecialchars($title);
         }
         header('Location: ' . $url, 302);
         exit();
     }
-    echo json_encode(['status' => 0, 'id' => $id, 'space' => $space, 'ttl' => $ttl]);
+    $result = ['status' => 0, 'id' => $id, 'space' => $space, 'ttl' => $ttl ];
+    if (isset($title)) {
+        $result['title'] = $title;
+    }
+    echo json_encode($result);
 ?>
