@@ -26,7 +26,7 @@ class QRPostForm {
                 </div>
                 <div class="d-flex flex-column">
                     <label for="qrtitle">Title:</label>
-                    <input id="qrtitle" name="qrtitle" type="text" />
+                    <input id="qrtitle" name="title" type="text" />
                 </div>
                 <div class="h-captcha" data-sitekey="<?= QR_HCAPTCHA_SITEKEY ?>"></div>
                 <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
