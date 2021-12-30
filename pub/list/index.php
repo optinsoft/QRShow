@@ -19,7 +19,8 @@
     $qrshow_url .= str_replace("\\","/", dirname(dirname($_SERVER['PHP_SELF'])));
     $qrshow_url = rtrim($qrshow_url, '/') . '/';
     if (isset($_GET['space']) && preg_match(QRPatterns::SPACE, $_GET['space'])) {
-        QRList::render($_GET['space'], $qrshow_url, function($message) {
+        $qrshow_spaces_dir = isset($_GET['sd']) && '1' === $_GET['sd'];
+        QRList::render($_GET['space'], $qrshow_url, $qrshow_spaces_dir, function($message) {
             header('HTTP/1.1 500 Error! ' . $message);
             die();
         });

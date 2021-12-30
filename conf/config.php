@@ -25,4 +25,8 @@
     if (!defined('QR_REDIS_PREFIX')) define('QR_REDIS_PREFIX', 'qr.');
     if (!defined('QR_MIN_TTL')) define('QR_MIN_TTL', 1);
     if (!defined('QR_MAX_TTL')) define('QR_MAX_TTL', 60);
+    if (!defined('QR_HCAPTCHA_SITEKEY')) define('QR_HCAPTCHA_SITEKEY', 'your_sitekey');
+    if (!defined('QR_HCAPTCHA_SECRET')) define('QR_HCAPTCHA_SECRET', 'your_secret');
+    if (!defined('QR_PUB_SPACE_PREFIX')) define('QR_PUB_SPACE_PREFIX', 'cf0f50dd8c5216fe');
+    if (!defined('QR_PUB_TTL')) define('QR_PUB_TTL', 60);
 ?>

@@ -17,3 +17,9 @@
 .qr-list-container {
     width: 400px;
 }
+.qr-post-container {
+    width: 400px;
+}
+.qr-post-container > div {
+    margin: 1rem 0rem;
+}

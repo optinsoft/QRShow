@@ -13,6 +13,17 @@
 	require_once __DIR__ . '/../vendor/autoload.php';
 	require_once __DIR__ . '/../conf/config.php';	
 
+	$qrshow_url  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+	$qrshow_url .= $_SERVER['SERVER_NAME'];
+	if (isset($_SERVER['QRSHOW_ROOT'])) {
+		$qrshow_url .= $_SERVER['QRSHOW_ROOT'];
+	}
+	else {
+		$qrshow_url .= str_replace("\\","/", dirname($_SERVER['PHP_SELF']));
+	}
+	$qrshow_url = rtrim($qrshow_url, '/') . '/';
+	$qrshow_spaces_dir = isset($_SERVER['QRSHOW_SPACES_DIR']) && ('1' === $_SERVER['QRSHOW_SPACES_DIR']);
+
 	//routing
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		require __DIR__ . '/../src/pages/QRData.php';
@@ -25,17 +36,6 @@
 	}
 
 	header('Content-Type: text/html; charset=utf-8');
-
-	$qrshow_url  = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
-	$qrshow_url .= $_SERVER['SERVER_NAME'];
-	if (isset($_SERVER['QRSHOW_ROOT'])) {
-		$qrshow_url .= $_SERVER['QRSHOW_ROOT'];
-	}
-	else {
-		$qrshow_url .= str_replace("\\","/", dirname($_SERVER['PHP_SELF']));
-	}
-	$qrshow_url = rtrim($qrshow_url, '/') . '/';
-	$qrshow_spaces_dir = isset($_SERVER['QRSHOW_SPACES_DIR']) && ('1' === $_SERVER['QRSHOW_SPACES_DIR']);
 ?>
 <?php
 	if (isset($_GET['id']) && preg_match(QRPatterns::ID, $_GET['id'])) { 
@@ -84,11 +84,14 @@
 	{
 		if (isset($_GET['space'])) {
 			if (preg_match(QRPatterns::SPACE, $_GET['space'])) {
-				QRListView::render($_GET['space'], $qrshow_url);
+				QRListView::render($_GET['space'], $qrshow_url, $qrshow_spaces_dir);
 			}
 			else {
 				QRSpaceForm::render($qrshow_url, $qrshow_spaces_dir);
 			}
+		}
+		else {
+			QRPostForm::render($qrshow_url, $qrshow_spaces_dir);
 		}
 	}
 ?>

@@ -11,7 +11,7 @@
 namespace optinsoft\QRShow;
 
 class QRListView {
-    public static function render($space, $qrshow_url) {
+    public static function render($space, $qrshow_url, $qrshow_spaces_dir) {
 ?>
         <div class="qr_space" id="space">Space: <?= htmlspecialchars($space) ?></div>
         <div class="qr_time" id="cur_time"></div>
@@ -20,7 +20,7 @@ class QRListView {
             <div id='qr_list'>
 <?php
                 $error = '';
-                QRList::render($space, $qrshow_url, function($message) use (&$error) {
+                QRList::render($space, $qrshow_url, $qrshow_spaces_dir, function($message) use (&$error) {
                     $error = '500 Error! ' . $message;
                 });
 ?>
@@ -91,7 +91,7 @@ class QRListView {
             setInterval(function(){
                 let dt = new Date();
                 $('#cur_time').html("Time: "  + dt.toUTCString());
-                $('#qr_list').load('<?= htmlspecialchars($qrshow_url) ?>list/?space=<?= htmlspecialchars($space) ?>', function(response, status, xhr) {
+                $('#qr_list').load('<?= htmlspecialchars($qrshow_url) ?>list/?space=<?= htmlspecialchars($space) ?><?= $qrshow_spaces_dir ? '&sd=1' : '' ?>', function(response, status, xhr) {
                     if (status == 'error') {
                         $('#error').html(xhr.status + ' ' + xhr.statusText );
                     }

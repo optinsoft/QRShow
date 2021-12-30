@@ -13,7 +13,7 @@ namespace optinsoft\QRShow;
 use Predis\{Client};
 
 class QRList {
-    public static function render($space, $qrshow_url, $onerror) {
+    public static function render($space, $qrshow_url, $qrshow_spaces_dir, $onerror) {
         $key_prefix = QR_REDIS_PREFIX . $space . '.';
         try {
             $redis = new Client();
@@ -44,7 +44,16 @@ class QRList {
 ?>
             <li id ="qr_list_item_<?= htmlspecialchars($id) ?>" class="list-group-item" qr_item_id="<?= htmlspecialchars($id) ?>">
                 <img src="<?= $qrshow_url ?>img/qr_code.png" />
-                    <a onclick="return qr_popup(this, '<?= htmlspecialchars($id) ?>', this.href+'&popup=true');" target='_blank' href="<?= htmlspecialchars($qrshow_url) ?>?id=<?= htmlspecialchars($id) ?>&space=<?= htmlspecialchars($space) ?>&title=<?= htmlspecialchars($title) ?>"><?= htmlspecialchars($title) ?></a>
+                    <a onclick="return qr_popup(this, '<?= htmlspecialchars($id) ?>', this.href+'&popup=true');" 
+                        target='_blank' href="<?= 
+                            htmlspecialchars($qrshow_url) 
+                        ?><?= 
+                            ($qrshow_spaces_dir ? 'spaces/' : '?space=') . htmlspecialchars($space) 
+                        ?><?= 
+                            ($qrshow_spaces_dir ? '/' : '&id=') . htmlspecialchars($id) 
+                        ?><?= 
+                            ($qrshow_spaces_dir ? '/?' : '&') . 'title=' . htmlspecialchars($title) 
+                        ?>"><?= htmlspecialchars($title) ?></a>
             </li>
 <?php
         }
