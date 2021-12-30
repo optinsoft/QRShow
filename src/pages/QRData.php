@@ -167,10 +167,10 @@
 	}
     if ($public && isset($qrshow_url)) {
         if (isset($qrshow_spaces_dir) && $qrshow_spaces_dir) {
-            $url = $qrshow_url . 'spaces/' . htmlspecialchars($space) .'/';
+            $url = $qrshow_url . 'spaces/' . htmlspecialchars($space) .'/' . htmlspecialchars($id) . '/';
         }
         else {
-            $url = $qrshow_url . '?space=' . htmlspecialchars($space);
+            $url = $qrshow_url . '?space=' . htmlspecialchars($space) . '&id=' . htmlspecialchars($id);
         }
         if (isset($title)) {
             $url .= '&title=' . htmlspecialchars($title);
