@@ -79,6 +79,11 @@
 	if (!is_null($id)) { 
 		$title = isset($_GET['title']) ? $_GET['title'] : 'id=' . $id;
 		QRView::render($id, $title, $_SERVER['REQUEST_URI']);
+?>
+		<div>
+			<a class="btn btn-primary" role="button" href="<?= $qrshow_url ?>">Back</a>
+		</div>
+<?php
 	}
 	else 
 	{

@@ -16,7 +16,7 @@ class QRSpaceForm {
         <form id="spaceForm" name="spaceForm" method="GET" action="<?= htmlspecialchars($qrshow_url) ?>" onsubmit="return validateForm()">
             <label for="space">Please, enter space (16-40 hex digits)</label>
             <input id="space" name="space" type="text" />
-            <input type="submit" value="Submit" />
+            <input class="btn btn-primary" type="submit" value="Submit" />
         </form>
         <div id="error"></div>
         <script>

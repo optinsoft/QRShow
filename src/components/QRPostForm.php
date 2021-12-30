@@ -30,7 +30,7 @@ class QRPostForm {
                 </div>
                 <div class="h-captcha" data-sitekey="<?= QR_HCAPTCHA_SITEKEY ?>"></div>
                 <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-                <div><input type="submit" value="Submit" /></div>
+                <div><input class="btn btn-primary" type="submit" value="Submit" /></div>
             </div>
         </form>
 <?php
