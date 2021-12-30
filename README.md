@@ -127,3 +127,7 @@ name | description
 `ttl`|Time-to-live, seconds. Must be between `QR_MIN_TTL` and `QR_MAX_TTL`.
 `s`|Signature, base64-encoded HMAC SHA-512 hash of `id` + `space` + `data` + `ttl` + `QR_API_KEY`.
 `t`|Token.
+
+## Live example
+
+[https://qrshow.org/](https://qrshow.org/)
