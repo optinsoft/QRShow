@@ -166,7 +166,7 @@
 		die();
 	}
     if ($public && isset($qrshow_url)) {
-        if (isset($qrshow_spaces_dir)) {
+        if (isset($qrshow_spaces_dir) && $qrshow_spaces_dir) {
             $url =  $qrshow_url . 'spaces/' . $space .'/' . $id . '/';
         }
         else {
