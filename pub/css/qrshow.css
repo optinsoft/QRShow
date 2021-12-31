@@ -4,8 +4,8 @@
 #error {
     color: red
 }
-.qr-conatiner {
-    width: 400px;
+.qr-container {
+    max-width: 400px;
 }
 .qr-image-container {
     background-color: black;

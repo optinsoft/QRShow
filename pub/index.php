@@ -61,7 +61,7 @@
 	<link rel="stylesheet" href="<?= $qrshow_url ?>css/qrshow.css?r=<?=  htmlspecialchars(microtime(true)) ?>"/>
 </head>
 <body>
-	<div class="offset-md-3 col-md-5">
+	<div class="offset-md-3 col-md-5 qr-container">
 		<div class="qr-title-container">
 			<div class="qr-title"><?= QR_TITLE ?></div>
 		</div>	
