@@ -61,8 +61,10 @@
 	<link rel="stylesheet" href="<?= $qrshow_url ?>css/qrshow.css?r=<?=  htmlspecialchars(microtime(true)) ?>"/>
 </head>
 <body>
-	<div class="col-md-6 offset-md-3">
-		<h1><?= QR_TITLE ?></h1>	
+	<div class="offset-md-3 col-md-5">
+		<div class="qr-title-container">
+			<div class="qr-title"><?= QR_TITLE ?></div>
+		</div>	
 <?php 
 	} // end if (!$popup)
 	else {

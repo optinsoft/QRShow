@@ -10,6 +10,13 @@
 */
 namespace optinsoft\QRShow;
 
+function millitime() {
+    $mt = microtime(true);
+    $mti = (int)$mt;
+    $mtf = (int)(($mt - (float)$mti) * 1000);
+    return $mti . str_pad($mtf, 3, '0', STR_PAD_RIGHT);
+}
+
 class QRPostForm {
     public static function render($qrshow_url, $qrshow_spaces_dir) {
 ?>
@@ -17,7 +24,7 @@ class QRPostForm {
             <div class="qr-post-container">
                 <div class="d-flex flex-column">
                     <label for="qrid">QR-code id:</label>
-                    <input class="flex-grow-1" id="qrid" name="id" type="text" />
+                    <input class="flex-grow-1" id="qrid" name="id" type="text"  value="<?= millitime() ?>"/>
                 </div>
                 <input type="hidden" name="space" value="public" />
                 <div class="d-flex flex-column">

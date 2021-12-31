@@ -4,6 +4,9 @@
 #error {
     color: red
 }
+.qr-conatiner {
+    width: 400px;
+}
 .qr-image-container {
     background-color: black;
     padding: 40px;
@@ -16,6 +19,13 @@
 }
 .qr-post-container > div {
     margin: 1rem 0rem;
+}
+.qr-title-container {
+    display: flex;
+    justify-content: left;}
+.qr-title {
+    font-size: 1.7rem;
+    font-weight: 800;
 }
 body{
     margin: 1rem;
