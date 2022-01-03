@@ -83,6 +83,7 @@
 			</div>
 <?php
 		}
+		QRFooter::render();
 	}
 	else 
 	{
@@ -97,6 +98,7 @@
 		else {
 			QRPostForm::render($qrshow_url, $qrshow_spaces_dir);
 		}
+		QRFooter::render();
 	}
 ?>
 <noscript>

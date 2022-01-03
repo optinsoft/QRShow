@@ -31,3 +31,7 @@ body{
     margin: 1rem;
     padding: 0;
 }
+.footer-container {
+    font-size: small;
+    margin: 1rem 0rem;
+}
